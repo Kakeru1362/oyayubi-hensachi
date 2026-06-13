@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>親指偏差値 - 1分間で、日本最強の親指を決める。</title>
+  <meta property="og:title" content="親指偏差値" />
+  <meta property="og:description" content="お前の親指、偏差値いくつ？ 1分で測れる。" />
+  <script type="module" crossorigin src="/oyayubi-hensachi/assets/index-BbFv4a7V.js"></script>
+  <link rel="stylesheet" crossorigin href="/oyayubi-hensachi/assets/index-CjpY4nIz.css">
+</head>
+<body>
+  <main id="app">
+    <!-- ホーム -->
+    <section id="screen-home" class="screen">
+      <div class="home-inner">
+        <p class="tagline">1分間で、日本最強の親指を決める。</p>
+        <h1 class="logo">親指偏差値</h1>
+        <p class="best" id="home-best" hidden></p>
+        <button id="btn-start" class="btn-primary">測定開始</button>
+        <details class="settings">
+          <summary>測定器の較正</summary>
+          <label class="slider-row">
+            フリック感度
+            <input type="range" id="sensitivity" min="12" max="48" step="2" />
+            <span id="sensitivity-val"></span>
+          </label>
+          <p class="hint">数値が小さいほど少ない動きでフリック判定されます</p>
+        </details>
+        <p class="proto-note">プロトタイプ版 v0.1 — 感触検証用</p>
+      </div>
+    </section>
+
+    <!-- 測定 -->
+    <section id="screen-play" class="screen" hidden>
+      <header class="play-head">
+        <button class="btn-quit" id="btn-quit">やめる</button>
+        <div class="phase-chip" id="phase-label">瞬発</div>
+        <div class="timer" id="timer">60.0</div>
+        <div class="pt" id="score-live">0 pt</div>
+      </header>
+      <div class="timer-bar"><div class="timer-fill" id="timer-fill"></div></div>
+      <div class="target-area" id="target-area">
+        <p class="target-display" id="target-display"></p>
+        <p class="target-kana" id="target-kana"></p>
+        <p class="stuck-hint" id="stuck-hint" hidden>黄色の文字は「゛゜小」キーか同じキーの連打で変化、⌫で消せます</p>
+        <p class="next-queue" id="next-queue"></p>
+      </div>
+      <div class="kb-wrap"><div id="keyboard"></div></div>
+    </section>
+
+    <!-- 結果（診断書） -->
+    <section id="screen-result" class="screen" hidden>
+      <div class="result-card" id="result-card">
+        <p class="result-head">親指健康診断書</p>
+        <p class="result-hensachi">親指偏差値 <span id="result-hensachi-val">--</span></p>
+        <p class="result-title" id="result-title">--</p>
+        <div class="result-grid">
+          <div><span class="lbl">スコア</span><span id="result-score">0</span></div>
+          <div><span class="lbl">正確率</span><span id="result-acc">0%</span></div>
+          <div><span class="lbl">完了お題</span><span id="result-words">0</span></div>
+        </div>
+        <div class="radar" id="result-phases"></div>
+        <div class="notes" id="result-notes"></div>
+        <p class="new-record" id="new-record" hidden>🏆 自己ベスト更新！</p>
+      </div>
+      <div class="result-actions">
+        <button id="btn-share" class="btn-primary">結果をシェア</button>
+        <button id="btn-retry" class="btn-secondary">もう一回測定</button>
+        <button id="btn-home" class="btn-ghost">ホームへ</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
