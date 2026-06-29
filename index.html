@@ -3,23 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0e1116" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>親指偏差値 - 1分間で、日本最強の親指を決める。</title>
+  <meta name="apple-mobile-web-app-title" content="親指偏差値" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <title>親指偏差値 - 1分で、あなたの親指偏差値を測る。</title>
+  <meta name="description" content="60秒のフリック入力で、あなたの親指偏差値を測定。お前の親指、偏差値いくつ？" />
   <meta property="og:title" content="親指偏差値" />
   <meta property="og:description" content="お前の親指、偏差値いくつ？ 1分で測れる。" />
-  <script type="module" crossorigin src="/oyayubi-hensachi/assets/index-BbFv4a7V.js"></script>
-  <link rel="stylesheet" crossorigin href="/oyayubi-hensachi/assets/index-CjpY4nIz.css">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kakeru1362.github.io/oyayubi-hensachi/" />
+  <meta property="og:image" content="https://kakeru1362.github.io/oyayubi-hensachi/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="親指偏差値" />
+  <meta name="twitter:description" content="お前の親指、偏差値いくつ？ 1分で測れる。" />
+  <meta name="twitter:image" content="https://kakeru1362.github.io/oyayubi-hensachi/og.png" />
+  <script type="module" crossorigin src="/oyayubi-hensachi/assets/index-CTnFvn5T.js"></script>
+  <link rel="stylesheet" crossorigin href="/oyayubi-hensachi/assets/index-neG1jcfT.css">
 </head>
 <body>
   <main id="app">
     <!-- ホーム -->
     <section id="screen-home" class="screen">
       <div class="home-inner">
-        <p class="tagline">1分間で、日本最強の親指を決める。</p>
+        <p class="tagline">1分で、あなたの親指偏差値を測る。</p>
         <h1 class="logo">親指偏差値</h1>
+        <p class="daily-no" id="home-daily"></p>
         <p class="best" id="home-best" hidden></p>
+        <div class="streak-row" id="home-streak" hidden></div>
+        <div class="trend" id="home-trend" hidden></div>
         <button id="btn-start" class="btn-primary">測定開始</button>
+        <div class="home-sub">
+          <button id="btn-howto" class="btn-ghost">あそびかた</button>
+          <button id="btn-sound" class="btn-ghost" aria-pressed="true">🔊 音 ON</button>
+        </div>
         <details class="settings">
           <summary>測定器の較正</summary>
           <label class="slider-row">
@@ -29,11 +50,11 @@
           </label>
           <p class="hint">数値が小さいほど少ない動きでフリック判定されます</p>
         </details>
-        <p class="proto-note">プロトタイプ版 v0.1 — 感触検証用</p>
+        <p class="proto-note">プロトタイプ版 v0.2 — 感触検証用</p>
       </div>
     </section>
 
-    <!-- 測定 -->
+    <!-- 測定 / オンボーディング -->
     <section id="screen-play" class="screen" hidden>
       <header class="play-head">
         <button class="btn-quit" id="btn-quit">やめる</button>
@@ -43,6 +64,8 @@
       </header>
       <div class="timer-bar"><div class="timer-fill" id="timer-fill"></div></div>
       <div class="target-area" id="target-area">
+        <div class="onboarding" id="onboarding" hidden></div>
+        <p class="combo" id="combo" hidden></p>
         <p class="target-display" id="target-display"></p>
         <p class="target-kana" id="target-kana"></p>
         <p class="stuck-hint" id="stuck-hint" hidden>黄色の文字は「゛゜小」キーか同じキーの連打で変化、⌫で消せます</p>
@@ -56,6 +79,8 @@
       <div class="result-card" id="result-card">
         <p class="result-head">親指健康診断書</p>
         <p class="result-hensachi">親指偏差値 <span id="result-hensachi-val">--</span></p>
+        <p class="result-top" id="result-top"></p>
+        <p class="result-disclaimer">※想定分布に基づく推定値です（実在ユーザーとの比較・全国順位ではありません）</p>
         <p class="result-title" id="result-title">--</p>
         <div class="result-grid">
           <div><span class="lbl">スコア</span><span id="result-score">0</span></div>
@@ -67,7 +92,8 @@
         <p class="new-record" id="new-record" hidden>🏆 自己ベスト更新！</p>
       </div>
       <div class="result-actions">
-        <button id="btn-share" class="btn-primary">結果をシェア</button>
+        <button id="btn-share" class="btn-primary">診断書を画像でシェア</button>
+        <button id="btn-share-x" class="btn-secondary">Xにポスト</button>
         <button id="btn-retry" class="btn-secondary">もう一回測定</button>
         <button id="btn-home" class="btn-ghost">ホームへ</button>
       </div>
